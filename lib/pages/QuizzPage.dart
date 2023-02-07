@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quizz/datas.dart';
 import 'package:quizz/main.dart';
 import 'package:quizz/question.dart';
+import 'package:quizz/widgets/CustomText.dart';
 
 class QuizzPage extends StatefulWidget {
   @override
@@ -32,9 +33,8 @@ class QuizzPageState extends State<QuizzPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appColor,
-        title: Text(
-          scoreDisplay,
-          style: const TextStyle(color: textColor),
+        title: CustomText(
+          textString: scoreDisplay,
         ),
       ),
       body: Center(

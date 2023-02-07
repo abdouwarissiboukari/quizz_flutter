@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quizz/main.dart';
-import 'package:quizz/quizzpage.dart';
+import 'package:quizz/pages/QuizzPage.dart';
 import 'package:quizz/widgets/CustomText.dart';
 
 class Home extends StatefulWidget {
@@ -24,37 +24,33 @@ class HomeState extends State<Home> {
         title: const Text("Quizz vrai ou faux"),
       ),
       body: Center(
-        child: Container(
-          child: Card(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Card(
             color: cardColr,
             elevation: 8,
-            child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Image.asset(
-                      imagePath,
-                      height: height / 2.5,
-                      width: width * 0.8,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: appColor),
-                    onPressed: () {
-                      openQuizzPage();
-                    },
-                    child: const CustomText(
-                      textString: "Commencer le Quizz",
-                      factor: 1.5,
-                    ),
-                  )
-                ]),
+            child: SizedBox(
+              height: width * 0.8,
+              width: width * 0.8,
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-        ),
-      ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: appColor),
+            onPressed: () {
+              openQuizzPage();
+            },
+            child: const CustomText(
+              textString: "Commencer le Quizz",
+              factor: 1.5,
+            ),
+          )
+        ],
+      )),
     );
   }
 
