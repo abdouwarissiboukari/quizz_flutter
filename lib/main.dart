@@ -1,23 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:quizz/apppage.dart';
+import 'package:quizz/pages/MyApp.dart';
 
 const Color appColor = Colors.deepOrange;
 const Color textColor = Colors.white;
+const Color textColorBlack = Colors.black;
 Color cardColr = Colors.orange.shade100;
 
 void main() {
   runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  final Color primaryColor = Colors.redAccent;
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: AppPage(),
-    );
-  }
 }

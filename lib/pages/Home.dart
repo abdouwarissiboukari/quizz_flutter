@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quizz/main.dart';
 import 'package:quizz/quizzpage.dart';
+import 'package:quizz/widgets/CustomText.dart';
 
-class AppPage extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  AppPageState createState() => AppPageState();
+  HomeState createState() => HomeState();
 }
 
-class AppPageState extends State<AppPage> {
+class HomeState extends State<Home> {
   String imagePath = "assets/cover.jpg";
 
   @override
@@ -20,12 +21,10 @@ class AppPageState extends State<AppPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appColor,
-        title: const Text("Quizz Flutter"),
+        title: const Text("Quizz vrai ou faux"),
       ),
       body: Center(
         child: Container(
-          // margin: const EdgeInsets.only(left: 30, right: 30),
-          // height: MediaQuery.of(context).size.height / 2,
           child: Card(
             color: cardColr,
             elevation: 8,
@@ -47,9 +46,9 @@ class AppPageState extends State<AppPage> {
                     onPressed: () {
                       openQuizzPage();
                     },
-                    child: const Text(
-                      "Commencer le Quizz",
-                      style: TextStyle(color: textColor),
+                    child: const CustomText(
+                      textString: "Commencer le Quizz",
+                      factor: 1.5,
                     ),
                   )
                 ]),
