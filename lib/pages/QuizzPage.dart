@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:quizz/datas.dart';
+import 'package:quizz/models/datas.dart';
 import 'package:quizz/main.dart';
 import 'package:quizz/question.dart';
+import 'package:quizz/widgets/CustomButton.dart';
 import 'package:quizz/widgets/CustomText.dart';
 
 class QuizzPage extends StatefulWidget {
@@ -74,8 +75,14 @@ class QuizzPageState extends State<QuizzPage> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      answerButton(answer: false),
-                      answerButton(answer: true),
+                      CustomButton(
+                        onButtonPressed: onQuizzPressed(true),
+                        sText: "VRAI",
+                      ),
+                      CustomButton(
+                        onButtonPressed: onQuizzPressed(false),
+                        sText: "FAUX",
+                      ),
                     ],
                   ),
                 )
@@ -87,22 +94,7 @@ class QuizzPageState extends State<QuizzPage> {
     );
   }
 
-  ElevatedButton answerButton({required bool answer}) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: (answer) ? Colors.greenAccent : Colors.redAccent,
-      ),
-      onPressed: () {
-        onQuizzPressed(choice: true);
-      },
-      child: Text(
-        (answer) ? "VRAI" : "FAUX",
-        style: const TextStyle(color: textColor),
-      ),
-    );
-  }
-
-  onQuizzPressed({required bool choice}) {
+  onQuizzPressed(bool choice) {
     setState(() {
       if (choice == currentQuestion.reponse) {
         showResultDialog(result: true, dialog: 1);
@@ -221,4 +213,19 @@ class QuizzPageState extends State<QuizzPage> {
       ],
     );
   }
+
+  // ElevatedButton answerButton({required bool answer}) {
+  //   return ElevatedButton(
+  //     style: ElevatedButton.styleFrom(
+  //       backgroundColor: (answer) ? Colors.greenAccent : Colors.redAccent,
+  //     ),
+  //     onPressed: () {
+  //       onQuizzPressed(true);
+  //     },
+  //     child: Text(
+  //       (answer) ? "VRAI" : "FAUX",
+  //       style: const TextStyle(color: textColor),
+  //     ),
+  //   );
+  // }
 }

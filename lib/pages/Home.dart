@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quizz/main.dart';
 import 'package:quizz/pages/QuizzPage.dart';
+import 'package:quizz/widgets/CustomButton.dart';
+import 'package:quizz/widgets/CustomImageView.dart';
 import 'package:quizz/widgets/CustomText.dart';
 
 class Home extends StatefulWidget {
@@ -15,8 +17,6 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final height = size.height;
-    final width = size.width;
 
     return Scaffold(
       appBar: AppBar(
@@ -27,28 +27,12 @@ class HomeState extends State<Home> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Card(
-            color: cardColr,
-            elevation: 8,
-            child: SizedBox(
-              height: width * 0.8,
-              width: width * 0.8,
-              child: Image.asset(
-                imagePath,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: appColor),
-            onPressed: () {
-              openQuizzPage();
-            },
-            child: const CustomText(
-              textString: "Commencer le Quizz",
-              factor: 1.5,
-            ),
-          )
+          CustomImageView(
+              dHeight: size.width * 0.8,
+              dWidth: size.width * 0.8,
+              sImagePath: imagePath),
+          CustomButton(
+              onButtonPressed: openQuizzPage(), sText: "Commencer le Quizz"),
         ],
       )),
     );
