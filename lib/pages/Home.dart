@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quizz/main.dart';
 import 'package:quizz/pages/QuizzPage.dart';
-import 'package:quizz/widgets/CustomButton.dart';
+import 'package:quizz/widgets/CustomPushButton.dart';
 import 'package:quizz/widgets/CustomImageView.dart';
-import 'package:quizz/widgets/CustomText.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -31,16 +30,17 @@ class HomeState extends State<Home> {
               dHeight: size.width * 0.8,
               dWidth: size.width * 0.8,
               sImagePath: imagePath),
-          CustomButton(
-              onButtonPressed: openQuizzPage(), sText: "Commencer le Quizz"),
+          CustomPushButton(sText: "Commencer le Quizz"),
         ],
       )),
     );
   }
 
   openQuizzPage() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext ctx) {
-      return QuizzPage();
-    }));
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext ctx) {
+        return QuizzPage();
+      }),
+    );
   }
 }

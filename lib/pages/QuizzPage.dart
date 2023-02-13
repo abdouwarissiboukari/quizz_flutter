@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:quizz/models/datas.dart';
 import 'package:quizz/main.dart';
-import 'package:quizz/question.dart';
-import 'package:quizz/widgets/CustomButton.dart';
+import 'package:quizz/models/datas.dart';
+import 'package:quizz/models/question.dart';
+import 'package:quizz/widgets/CustomImageView.dart';
 import 'package:quizz/widgets/CustomText.dart';
 
 class QuizzPage extends StatefulWidget {
@@ -31,65 +31,65 @@ class QuizzPageState extends State<QuizzPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appColor,
-        title: CustomText(
-          textString: scoreDisplay,
+        title: const CustomText(
+          textString: "Le Quizz",
         ),
       ),
       body: Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Card(
-            elevation: 8,
-            child: Column(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            CustomText(
+              textString: paginationDisplay,
+              color: appColor,
+              factor: 1.4,
+            ),
+            CustomText(
+              textString: scoreDisplay,
+              color: appColor,
+              factor: 1.4,
+            ),
+            CustomImageView(
+              dHeight: size.width * 0.8,
+              dWidth: size.width * 0.8,
+              sImagePath: currentQuestion.getImage(),
+            ),
+            CustomText(
+              textString: currentQuestion.question,
+              color: Colors.grey[900] as Color,
+              factor: 1.6,
+              fontWeight: FontWeight.bold,
+            ),
+            Row(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Text(
-                    paginationDisplay,
-                    style: const TextStyle(color: appColor, fontSize: 18),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 7, right: 7),
-                  child: Text(
-                    currentQuestion.question,
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 7, right: 7),
-                  child: Image.asset(
-                    currentQuestion.getImage(),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 5),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CustomButton(
-                        onButtonPressed: onQuizzPressed(true),
-                        sText: "VRAI",
-                      ),
-                      CustomButton(
-                        onButtonPressed: onQuizzPressed(false),
-                        sText: "FAUX",
-                      ),
-                    ],
-                  ),
-                )
+                answerButton(answer: true),
+                answerButton(answer: false),
               ],
             ),
-          ),
+          ],
         ),
+      ),
+    );
+  }
+
+  ElevatedButton answerButton({required bool answer}) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          backgroundColor: (answer) ? Colors.greenAccent : Colors.redAccent,
+          elevation: 10.0),
+      onPressed: () {
+        onQuizzPressed(true);
+      },
+      child: Text(
+        (answer) ? "VRAI" : "FAUX",
+        style: const TextStyle(color: textColor),
       ),
     );
   }
@@ -119,17 +119,16 @@ class QuizzPageState extends State<QuizzPage> {
 
   SimpleDialog quizzShowDialog({required bool resultat}) {
     return SimpleDialog(
+      contentPadding: const EdgeInsets.all(10),
       children: [
-        Padding(
-          padding: const EdgeInsets.only(
-            left: 15,
-            top: 10,
-            bottom: 10,
-          ),
-          child: Text(
-            (resultat) ? "C'est gagné!" : "Raté!",
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
-          ),
+        CustomText(
+          textString: (resultat) ? "C'est gagné!" : "Oups! perdu...",
+          color: (resultat) ? Colors.green : Colors.red,
+          factor: 1.4,
+          fontWeight: FontWeight.w400,
+        ),
+        const SizedBox(
+          height: 15,
         ),
         Padding(
           padding: const EdgeInsets.only(
@@ -147,23 +146,25 @@ class QuizzPageState extends State<QuizzPage> {
                   top: 10,
                   bottom: 10,
                 ),
-                child: Text(
-                  currentQuestion.explication,
-                  style: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.w400),
+                child: CustomText(
+                  textString: currentQuestion.explication,
+                  color: Colors.black,
+                  factor: 1.1,
+                  fontWeight: FontWeight.w400,
                 ),
               )
             : Container(
                 height: 0,
                 width: 0,
               ),
-        TextButton(
+        ElevatedButton(
           onPressed: () {
             nextQuestion(response: resultat);
           },
-          child: const Text(
-            "Passer à la question suivante",
-            style: TextStyle(color: Colors.black, fontSize: 16),
+          style: ElevatedButton.styleFrom(backgroundColor: appColor),
+          child: const CustomText(
+            textString: "Passer à la question suivante",
+            factor: 1.1,
           ),
         ),
       ],
@@ -213,19 +214,4 @@ class QuizzPageState extends State<QuizzPage> {
       ],
     );
   }
-
-  // ElevatedButton answerButton({required bool answer}) {
-  //   return ElevatedButton(
-  //     style: ElevatedButton.styleFrom(
-  //       backgroundColor: (answer) ? Colors.greenAccent : Colors.redAccent,
-  //     ),
-  //     onPressed: () {
-  //       onQuizzPressed(true);
-  //     },
-  //     child: Text(
-  //       (answer) ? "VRAI" : "FAUX",
-  //       style: const TextStyle(color: textColor),
-  //     ),
-  //   );
-  // }
 }
